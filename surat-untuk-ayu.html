@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Ayu ❤</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0a0a10;
+    --bg-deep2:#1c0f12;
+    --gold:#c9a24b;
+    --gold-light:#f0dba0;
+    --gold-soft:#9c7c3c;
+    --cream:#f3ead8;
+    --rose:#5c2b30;
+    --maxw:640px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse at 50% 0%, var(--bg-deep2) 0%, var(--bg-deep) 55%),
+      var(--bg-deep);
+    color:var(--cream);
+    font-family:'EB Garamond', serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  .eyebrow{
+    font-family:'Marcellus', serif;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    font-size:.7rem;
+    color:var(--gold);
+    opacity:.85;
+  }
+
+  /* ---------- particles ---------- */
+  #particles{position:fixed;inset:0;pointer-events:none;z-index:0;}
+  .spark{
+    position:absolute;
+    width:3px;height:3px;
+    background:var(--gold-light);
+    border-radius:50%;
+    opacity:0;
+    box-shadow:0 0 6px 1px var(--gold-light);
+    animation:drift linear infinite;
+  }
+  @keyframes drift{
+    0%{opacity:0; transform:translateY(0) translateX(0);}
+    10%{opacity:.8;}
+    90%{opacity:.6;}
+    100%{opacity:0; transform:translateY(-120vh) translateX(20px);}
+  }
+
+  /* ---------- hero / seal ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:8vh 6vw;
+    z-index:1;
+    transition:opacity .8s ease, filter .8s ease;
+  }
+  .hero.hide{opacity:0; filter:blur(6px); pointer-events:none; position:absolute; inset:0;}
+
+  .hero-title{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-size:clamp(1.8rem, 5vw, 2.6rem);
+    color:var(--gold-light);
+    margin:1.1rem 0 .4rem;
+    letter-spacing:.02em;
+  }
+  .hero-sub{
+    font-size:.95rem;
+    color:rgba(243,234,216,.65);
+    margin-bottom:4.2rem;
+    font-style:italic;
+  }
+
+  .seal-wrap{
+    position:relative;
+    width:128px;height:128px;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .seal{
+    width:100%;height:100%;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 35% 30%, var(--gold-light) 0%, var(--gold) 38%, var(--gold-soft) 70%, #5e4a22 100%);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:
+      0 0 0 4px rgba(201,162,75,.15),
+      0 8px 24px rgba(0,0,0,.55),
+      inset 0 2px 6px rgba(255,255,255,.35),
+      inset 0 -6px 10px rgba(0,0,0,.35);
+    transition:transform .35s ease, box-shadow .35s ease;
+    animation:pulse 2.6s ease-in-out infinite;
+  }
+  .seal-wrap:active .seal{transform:scale(.94);}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 4px rgba(201,162,75,.15), 0 8px 24px rgba(0,0,0,.55), inset 0 2px 6px rgba(255,255,255,.35), inset 0 -6px 10px rgba(0,0,0,.35);}
+    50%{box-shadow:0 0 0 9px rgba(201,162,75,.08), 0 8px 30px rgba(0,0,0,.55), inset 0 2px 6px rgba(255,255,255,.35), inset 0 -6px 10px rgba(0,0,0,.35);}
+  }
+  .seal-glyph{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:2.6rem;
+    color:#3a2a0c;
+    text-shadow:0 1px 0 rgba(255,255,255,.4);
+  }
+  .seal-crack{
+    position:absolute; inset:0;
+    border-radius:50%;
+    overflow:hidden;
+    opacity:0;
+  }
+  .seal.breaking{animation:none; transform:scale(1.08);}
+  .seal.breaking .seal-glyph{opacity:0;}
+  .shard{
+    position:absolute;
+    width:50%; height:50%;
+    background:linear-gradient(135deg, var(--gold-light), var(--gold-soft));
+    opacity:0;
+  }
+
+  .tap-hint{
+    margin-top:1.6rem;
+    font-size:.72rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:rgba(243,234,216,.5);
+    font-family:'Marcellus', serif;
+  }
+
+  /* ---------- letter section ---------- */
+  .letter-screen{
+    position:relative;
+    z-index:1;
+    min-height:100vh;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    padding:9vh 6vw 6vh;
+    opacity:0;
+    transition:opacity 1s ease;
+  }
+  .letter-screen.show{display:flex; opacity:1;}
+
+  .letter-card{
+    width:100%;
+    max-width:var(--maxw);
+    background:
+      linear-gradient(180deg, rgba(243,234,216,.04), rgba(243,234,216,.02));
+    border:1px solid rgba(201,162,75,.35);
+    border-radius:2px;
+    padding:2.6rem 1.8rem 2.2rem;
+    position:relative;
+  }
+  .letter-card::before, .letter-card::after{
+    content:"";
+    position:absolute;
+    width:22px;height:22px;
+    border:1px solid var(--gold);
+    opacity:.7;
+  }
+  .letter-card::before{top:10px;left:10px;border-right:none;border-bottom:none;}
+  .letter-card::after{bottom:10px;right:10px;border-left:none;border-top:none;}
+
+  .letter-heading{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:500;
+    color:var(--gold-light);
+    font-size:1.4rem;
+    text-align:center;
+    margin-bottom:1.4rem;
+  }
+  .divider{
+    width:60px;height:1px;
+    background:var(--gold);
+    opacity:.6;
+    margin:0 auto 1.6rem;
+  }
+  .letter-body{
+    font-size:1.02rem;
+    line-height:1.85;
+    color:var(--cream);
+    white-space:pre-wrap;
+  }
+  .letter-body .cursor{
+    display:inline-block;
+    width:2px; height:1.1em;
+    background:var(--gold-light);
+    margin-left:2px;
+    vertical-align:-2px;
+    animation:blink 1s step-end infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  .signature{
+    margin-top:1.8rem;
+    text-align:right;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    color:var(--gold-light);
+    font-size:1.15rem;
+    opacity:0;
+    transition:opacity 1s ease;
+  }
+  .signature.show{opacity:1;}
+
+  /* ---------- video ---------- */
+  .video-wrap{
+    width:100%;
+    max-width:var(--maxw);
+    margin-top:2.8rem;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 1s ease, transform 1s ease;
+    border-radius:4px;
+    overflow:hidden;
+    border:1px solid rgba(201,162,75,.4);
+    box-shadow:0 14px 36px rgba(0,0,0,.55);
+    position:relative;
+  }
+  .video-wrap.show{opacity:1; transform:translateY(0);}
+  .bday-video{
+    width:100%;
+    display:block;
+    background:#000;
+    max-height:70vh;
+  }
+
+  /* ---------- gallery ---------- */
+  .gallery{
+    width:100%;
+    max-width:var(--maxw);
+    margin-top:3.2rem;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 1s ease, transform 1s ease;
+    display:flex;
+    gap:1.1rem;
+    justify-content:center;
+    flex-wrap:wrap;
+    padding:0 .4rem;
+  }
+  .gallery.show{opacity:1; transform:translateY(0);}
+  .polaroid{
+    background:#f3ead8;
+    padding:.5rem .5rem 1rem;
+    width:118px;
+    box-shadow:0 10px 24px rgba(0,0,0,.5);
+    transform:rotate(var(--r));
+    border-radius:1px;
+  }
+  .polaroid img{
+    width:100%; height:118px; object-fit:cover; display:block;
+    filter:saturate(.92) contrast(1.02);
+  }
+  .polaroid:nth-child(1){--r:-6deg;}
+  .polaroid:nth-child(2){--r:3deg; margin-top:10px;}
+  .polaroid:nth-child(3){--r:-2deg;}
+
+  /* ---------- claim cta ---------- */
+  .cta-wrap{
+    margin-top:3.4rem;
+    text-align:center;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 1s ease, transform 1s ease;
+  }
+  .cta-wrap.show{opacity:1; transform:translateY(0);}
+  .cta-label{
+    font-size:.8rem;
+    color:rgba(243,234,216,.6);
+    margin-bottom:1rem;
+    font-style:italic;
+  }
+  .cta-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:.55rem;
+    font-family:'Marcellus', serif;
+    letter-spacing:.06em;
+    font-size:.92rem;
+    color:#2a1c08;
+    text-decoration:none;
+    padding:.95rem 1.9rem;
+    border-radius:999px;
+    background:linear-gradient(135deg, var(--gold-light), var(--gold) 60%, var(--gold-soft));
+    box-shadow:0 10px 28px rgba(201,162,75,.28), inset 0 1px 0 rgba(255,255,255,.5);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .cta-btn:active{transform:scale(.96);}
+
+  .footer-note{
+    margin-top:2.6rem;
+    font-size:.68rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:rgba(243,234,216,.35);
+    text-align:center;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .seal{animation:none;}
+    .spark{animation:none; display:none;}
+    *{transition-duration:.01ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<!-- HERO / SEAL -->
+<section class="hero" id="hero">
+  <div class="eyebrow">Selamat Hari Jadi</div>
+  <div class="hero-title">Untuk Ayu, Sayang Aku</div>
+  <div class="hero-sub">Ada sepucuk surat menanti di sebalik meterai ini.</div>
+
+  <div class="seal-wrap" id="sealWrap">
+    <div class="seal" id="seal">
+      <span class="seal-glyph">A</span>
+    </div>
+  </div>
+  <div class="tap-hint">Tekan meterai untuk membuka</div>
+</section>
+
+<!-- LETTER -->
+<section class="letter-screen" id="letterScreen">
+  <div class="letter-card">
+    <div class="letter-heading">Assalamualaikum, Sayang</div>
+    <div class="divider"></div>
+    <div class="letter-body" id="letterBody"></div>
+    <div class="signature" id="signature">— Sayang awak, yang sentiasa sayangkan awak.</div>
+  </div>
+
+  <div class="video-wrap" id="videoWrap">
+    <video class="bday-video" id="bdayVideo" playsinline preload="metadata" poster="assets/video-poster.jpg" controls>
+      <source src="assets/birthday-video.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="gallery" id="gallery">
+    <div class="polaroid"><img src="assets/photo2.webp" alt="Ayu"></div>
+    <div class="polaroid"><img src="assets/photo3.jpg" alt="Kita"></div>
+    <div class="polaroid"><img src="assets/photo1.jpg" alt="Ayu"></div>
+  </div>
+
+  <div class="cta-wrap" id="ctaWrap">
+    <div class="cta-label">Ada satu lagi hadiah kecil menanti, sayang</div>
+    <a class="cta-btn" id="claimBtn" href="#" target="_blank" rel="noopener">🎁 Claim Hadiah Hari Jadi</a>
+    <div class="footer-note">Dibuat dengan penuh kasih, khas untuk Ayu</div>
+  </div>
+</section>
+
+<script>
+// ---------- ambient particles ----------
+const pWrap = document.getElementById('particles');
+const N = 22;
+for(let i=0;i<N;i++){
+  const s = document.createElement('div');
+  s.className = 'spark';
+  const left = Math.random()*100;
+  const dur = 8 + Math.random()*10;
+  const delay = Math.random()*10;
+  const size = 2 + Math.random()*2;
+  s.style.left = left+'vw';
+  s.style.bottom = '-5vh';
+  s.style.width = size+'px';
+  s.style.height = size+'px';
+  s.style.animationDuration = dur+'s';
+  s.style.animationDelay = delay+'s';
+  pWrap.appendChild(s);
+}
+
+// ---------- seal -> letter transition ----------
+const sealWrap = document.getElementById('sealWrap');
+const seal = document.getElementById('seal');
+const hero = document.getElementById('hero');
+const letterScreen = document.getElementById('letterScreen');
+
+const LETTER_TEXT = `Assalamualaikum sayang ❤️
+Selamat hari jadi, sayang. Alhamdulillah, bertambah lagi umor awk pada tahun ni. Sy doa semoga Allah panjangkan umor awk, murahkan rezeki awk, kurniakan kesihatan yang baik, permudahkan segala urusan awk, dan makbulkan semua impian awk, sayang. Terima kasih sebab hadir dalam hidup sy. Kehadiran awk buat hidup sy jadi lebih bermakno dan bahagio. Sy bersyukur sangat sebab Allah pertemukan kito. Semoga hubungan kito sentiasa dipeliharo, saling memahami, saling menyokong, dan dipermudahkan sampai ke pengakhiran yang paling indah, insya-Allah. Sy janji akan cuba jadi yang terbaik dan jago awk molek-molek. Sayey diri awk sokmo, dan sy sayang awk lebih daripada yang mampu sy oyap dengan kata-kato. Selamat Hari Jadi sekali lagi, sayang. Semoga Allah sentiasa jago awk. I love you selalu. ❤️🤍`;
+
+let opened = false;
+sealWrap.addEventListener('click', () => {
+  if(opened) return;
+  opened = true;
+  seal.classList.add('breaking');
+
+  setTimeout(() => {
+    hero.classList.add('hide');
+    letterScreen.classList.add('show');
+    typeLetter();
+  }, 480);
+});
+
+function typeLetter(){
+  const body = document.getElementById('letterBody');
+  const signature = document.getElementById('signature');
+  const videoWrap = document.getElementById('videoWrap');
+  const gallery = document.getElementById('gallery');
+  const ctaWrap = document.getElementById('ctaWrap');
+
+  let i = 0;
+  body.innerHTML = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor';
+
+  const speed = 18; // ms per character
+  function step(){
+    if(i < LETTER_TEXT.length){
+      body.textContent = LETTER_TEXT.slice(0, i+1);
+      body.appendChild(cursor);
+      i++;
+      setTimeout(step, speed);
+    } else {
+      cursor.remove();
+      setTimeout(() => {
+        signature.classList.add('show');
+        setTimeout(() => videoWrap.classList.add('show'), 500);
+        setTimeout(() => gallery.classList.add('show'), 1100);
+        setTimeout(() => ctaWrap.classList.add('show'), 1700);
+      }, 300);
+    }
+  }
+  step();
+}
+
+// ---------- autoplay video when scrolled into view ----------
+const bdayVideo = document.getElementById('bdayVideo');
+const videoObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      bdayVideo.play().catch(()=>{});
+    } else {
+      bdayVideo.pause();
+    }
+  });
+}, { threshold: 0.6 });
+videoObserver.observe(bdayVideo);
+
+// ---------- whatsapp claim link ----------
+const phone = '60112064290'; // Malaysia country code + number without leading 0
+const waMessage = "Sayang, Ayu dah jumpa surat tu... boleh claim hadiah hari jadi sekarang? 🥹💌";
+document.getElementById('claimBtn').href =
+  `https://wa.me/${phone}?text=${encodeURIComponent(waMessage)}`;
+</script>
+
+</body>
+</html>
